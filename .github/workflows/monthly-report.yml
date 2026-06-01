@@ -1,0 +1,58 @@
+name: 月次レポート自動生成（やんばる国内観光客）
+
+# 毎月 1〜3 日の 00:00 UTC（＝09:00 JST）に「前月分」を自動生成・公開する。
+# 1日にデータが未更新でも、2日・3日のリトライで拾う（生成は冪等：同内容なら差分なしでコミットされない）。
+# 手動実行（workflow_dispatch）では対象月を指定可能。
+
+on:
+  schedule:
+    - cron: "0 0 1-3 * *"
+  workflow_dispatch:
+    inputs:
+      month:
+        description: "対象月 YYYY-MM（空欄なら前月）"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: monthly-report
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: チェックアウト
+        uses: actions/checkout@v4
+
+      - name: Python セットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 依存関係インストール
+        run: pip install pandas numpy
+
+      - name: レポート生成（前月分／GitHub全件データを取得して集計）
+        run: |
+          if [ -n "${{ github.event.inputs.month }}" ]; then
+            python scripts/generate_report.py --month "${{ github.event.inputs.month }}"
+          else
+            python scripts/generate_report.py
+          fi
+
+      - name: 変更をコミット＆プッシュ
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "Auto: 月次レポート自動生成（前月分・国内）[skip ci]"
+            git push
+            echo "コミット・プッシュしました。"
+          else
+            echo "変更なし（データ未更新または既に最新）。コミットをスキップします。"
+          fi
