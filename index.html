@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>やんばるハッピーアンケート 月次レポート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --text:#222; --mute:#555; --sub:#777; --rule:#ccc; --rule-light:#e3e3e3; --bg:#fff; --bg-alt:#f6f5f1; --accent:#2f5a3f; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:"Noto Serif JP","游明朝",serif;line-height:1.9;font-feature-settings:"palt"}
+  .container{max-width:920px;margin:0 auto;padding:0 32px}
+  header{border-bottom:1px solid var(--rule);padding:16px 0;font-family:"Noto Sans JP",sans-serif;font-size:12px;color:var(--mute)}
+  .hero{padding:64px 0 40px;border-bottom:2px solid var(--text)}
+  .hero .cat{font-family:"Noto Sans JP",sans-serif;font-size:13px;color:var(--accent);font-weight:500;letter-spacing:.1em;margin-bottom:14px}
+  .hero h1{font-size:30px;font-weight:700;line-height:1.5;margin-bottom:14px}
+  .hero p{font-family:"Noto Sans JP",sans-serif;font-size:14px;color:var(--mute)}
+  main{padding:40px 0 80px}
+  h2{font-size:16px;font-weight:700;border-bottom:1px solid var(--rule);padding-bottom:8px;margin-bottom:20px}
+  .list{list-style:none;display:grid;gap:14px}
+  .card{border:1px solid var(--rule-light);padding:20px 24px;display:block;text-decoration:none;color:var(--text);transition:border-color .2s}
+  .card:hover{border-color:var(--accent)}
+  .card .vol{font-family:"Noto Sans JP",sans-serif;font-size:11px;color:var(--accent);font-weight:500;margin-bottom:4px}
+  .card .t{font-size:18px;font-weight:700;margin-bottom:6px}
+  .card .m{font-family:"Noto Sans JP",sans-serif;font-size:12px;color:var(--sub)}
+  footer{background:var(--bg-alt);border-top:2px solid var(--text);padding:28px 0;margin-top:40px;font-family:"Noto Sans JP",sans-serif;font-size:11px;color:var(--sub)}
+  .footer-row{display:flex;justify-content:space-between}
+  @media(max-width:760px){.container{padding:0 16px}.hero h1{font-size:22px}.footer-row{flex-direction:column;gap:6px}}
+</style>
+</head>
+<body>
+<header><div class="container">一般社団法人沖縄やんばるDMO</div></header>
+<div class="container">
+  <section class="hero">
+    <div class="cat">YAMBARU HAPPY SURVEY ／ MONTHLY REPORT</div>
+    <h1>やんばるハッピーアンケート<br/>月次レポート</h1>
+    <p>やんばるエリアの国内観光ウェブアンケートを月次で集計・分析したレポートを公開しています。</p>
+  </section>
+  <main>
+    <h2>レポート一覧</h2>
+    <ul class="list">
+      <li>
+        <a class="card" href="202605/">
+          <div class="vol">Vol. 2 ／ 国内観光客</div>
+          <div class="t">令和8年5月度 集計報告</div>
+          <div class="m">集計期間：2026年5月1日〜31日　／　有効回答 n＝1,070件</div>
+        </a>
+      </li>
+    </ul>
+  </main>
+</div>
+<footer>
+  <div class="container">
+    <div class="footer-row">
+      <div>発行：一般社団法人沖縄やんばるDMO</div>
+      <div>YAMBARU HAPPY SURVEY MONTHLY REPORT</div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
