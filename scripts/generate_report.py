@@ -517,7 +517,7 @@ def build_landing(manifest):
         r = reiwa(y)
         ym = e["month"].replace("-", "")
         cards.append(
-            f'      <li>\n        <a class="card" href="{ym}/">\n'
+            f'      <li>\n        <a class="card" href="domestic_survey/{ym}/">\n'
             f'          <div class="vol">Vol. {e["vol"]} ／ 国内観光客</div>\n'
             f'          <div class="t">令和{r}年{mo}月度 集計報告</div>\n'
             f'          <div class="m">集計期間：{y}年{mo}月1日〜{last}日　／　有効回答 n＝{e["n"]:,}件</div>\n'
@@ -608,13 +608,13 @@ def main():
 
     N = s["meta"]["N"]; vol = vol_of(month)
 
-    # 2) 当月HTML
+    # 2) 当月HTML（domestic_survey/<YYYYMM>/index.html）
     ym = month.replace("-", "")
-    out_dir = os.path.join(REPO, ym)
+    out_dir = os.path.join(REPO, "domestic_survey", ym)
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8") as f:
         f.write(build_month_html(s, month))
-    print(f"[generate] {ym}/index.html を生成（N={N:,}, Vol.{vol}）")
+    print(f"[generate] domestic_survey/{ym}/index.html を生成（N={N:,}, Vol.{vol}）")
 
     # 3) マニフェスト更新 + トップ再生成
     mpath = os.path.join(REPO, "reports.json")

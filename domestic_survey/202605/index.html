@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>やんばるハッピーアンケート月次レポート — 令和8年5月</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --text: #222; --text-mute: #555; --text-sub: #777;
+    --rule: #cccccc; --rule-light: #e3e3e3;
+    --bg: #ffffff; --bg-alt: #f6f5f1;
+    --accent: #2f5a3f; --accent-dark: #1f3f2c; --warning: #8a3a26;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: "Noto Serif JP","ヒラギノ明朝 ProN","游明朝","Yu Mincho",serif; font-size: 15px; line-height: 1.9; -webkit-font-smoothing: antialiased; font-feature-settings: "palt"; }
+  .container { max-width: 920px; margin: 0 auto; padding: 0 32px; }
+  .page-header { border-bottom: 1px solid var(--rule); padding: 16px 0; font-family: "Noto Sans JP", sans-serif; font-size: 12px; color: var(--text-mute); }
+  .page-header .container { display: flex; justify-content: space-between; align-items: center; }
+  .cover { padding: 64px 0 48px; border-bottom: 2px solid var(--text); }
+  .cover .category { font-family: "Noto Sans JP", sans-serif; font-size: 13px; color: var(--accent); font-weight: 500; margin-bottom: 16px; letter-spacing: 0.1em; }
+  .cover h1 { font-family: "Noto Serif JP", serif; font-size: 30px; font-weight: 700; line-height: 1.55; color: var(--text); margin-bottom: 16px; }
+  .cover .subtitle { font-family: "Noto Sans JP", sans-serif; font-size: 14px; color: var(--text-mute); font-weight: 400; margin-bottom: 32px; }
+  .cover .meta { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 13px; color: var(--text-mute); display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .cover .meta dt { font-family: "Noto Sans JP", sans-serif; font-size: 11px; color: var(--text-sub); margin-bottom: 4px; }
+  .cover .meta dd { font-size: 14px; color: var(--text); }
+  .toc { background: var(--bg-alt); padding: 28px 32px; margin: 40px 0; border: 1px solid var(--rule-light); }
+  .toc h2 { font-family: "Noto Serif JP", serif; font-size: 16px; font-weight: 700; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+  .toc ol { list-style: none; counter-reset: toc; }
+  .toc ol li { counter-increment: toc; padding: 6px 0; font-size: 14px; display: flex; align-items: baseline; gap: 12px; }
+  .toc ol li::before { content: counter(toc) "."; font-family: "Noto Sans JP", sans-serif; color: var(--accent); font-weight: 500; width: 24px; flex-shrink: 0; }
+  .toc ol li a { color: var(--text); text-decoration: none; }
+  .toc ol li a:hover { color: var(--accent); text-decoration: underline; }
+  main { padding: 24px 0 80px; }
+  section.chapter { margin-bottom: 64px; }
+  .chapter-head { border-top: 2px solid var(--accent); padding-top: 12px; margin-bottom: 24px; }
+  .chapter-head .num { font-family: "Noto Sans JP", sans-serif; font-size: 12px; color: var(--accent); font-weight: 500; margin-bottom: 6px; }
+  .chapter-head h2 { font-family: "Noto Serif JP", serif; font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.5; }
+  .lead { font-size: 15px; line-height: 2; margin-bottom: 24px; color: var(--text); }
+  .lead b { font-weight: 700; color: var(--text); }
+  h3.sub { font-family: "Noto Serif JP", serif; font-size: 17px; font-weight: 700; color: var(--text); border-left: 4px solid var(--accent); padding-left: 12px; margin: 32px 0 14px; }
+  p { margin-bottom: 12px; font-size: 14.5px; line-height: 1.95; }
+  .summary-box { border: 1px solid var(--rule); margin: 24px 0; }
+  .summary-box .row { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--rule-light); }
+  .summary-box .row:last-child { border-bottom: none; }
+  .summary-box .cell { padding: 14px 16px; border-right: 1px solid var(--rule-light); font-size: 13px; }
+  .summary-box .cell:last-child { border-right: none; }
+  .summary-box .cell .label { font-family: "Noto Sans JP", sans-serif; font-size: 11px; color: var(--text-sub); margin-bottom: 4px; }
+  .summary-box .cell .value { font-family: "Noto Serif JP", serif; font-size: 22px; font-weight: 700; color: var(--text); }
+  .summary-box .cell .value .unit { font-size: 12px; color: var(--text-mute); font-weight: 400; margin-left: 2px; }
+  .summary-box .cell .sub { font-size: 11px; color: var(--text-sub); margin-top: 4px; }
+  .keypoint { background: var(--bg-alt); border: 1px solid var(--rule-light); padding: 20px 24px; margin: 20px 0; }
+  .keypoint h4 { font-family: "Noto Sans JP", sans-serif; font-size: 12px; color: var(--accent); font-weight: 700; margin-bottom: 10px; letter-spacing: 0.05em; }
+  .keypoint ol { list-style: none; counter-reset: kp; }
+  .keypoint ol li { counter-increment: kp; padding: 6px 0 6px 28px; position: relative; font-size: 14px; line-height: 1.95; }
+  .keypoint ol li::before { content: "(" counter(kp) ")"; position: absolute; left: 0; color: var(--accent); font-family: "Noto Sans JP", sans-serif; font-weight: 500; }
+  table.data { width: 100%; border-collapse: collapse; margin: 16px 0 20px; font-size: 13.5px; }
+  table.data th, table.data td { padding: 8px 12px; border: 1px solid var(--rule-light); text-align: left; vertical-align: middle; }
+  table.data thead th { background: var(--bg-alt); font-family: "Noto Sans JP", sans-serif; font-size: 12px; font-weight: 500; color: var(--text-mute); border-bottom: 2px solid var(--text-mute); }
+  table.data td.num { text-align: center; color: var(--text-mute); font-family: "Noto Sans JP", sans-serif; font-size: 12px; width: 40px; }
+  table.data td.theme { font-weight: 500; }
+  table.data td.cnt, table.data td.pct { text-align: right; font-family: "Noto Sans JP", sans-serif; width: 80px; }
+  table.data td.bar { width: 160px; padding: 0 12px; }
+  table.data td.bar .bar-inner { height: 8px; background: var(--accent); }
+  table.data tr.warn td.bar .bar-inner { background: var(--warning); }
+  table.data caption { caption-side: top; text-align: left; font-size: 12px; color: var(--text-sub); padding-bottom: 4px; }
+  .voices { margin: 16px 0 20px; }
+  .voice { background: var(--bg-alt); border-left: 3px solid var(--accent); padding: 12px 16px; margin-bottom: 8px; font-size: 13.5px; line-height: 1.85; color: var(--text); }
+  .voice.warn { border-left-color: var(--warning); }
+  .voice .meta { display: block; font-family: "Noto Sans JP", sans-serif; font-size: 11px; color: var(--text-sub); margin-top: 6px; }
+  .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 20px 0; }
+  .chart-block { border: 1px solid var(--rule-light); padding: 20px; }
+  .chart-block .ttl { font-family: "Noto Serif JP", serif; font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .chart-block .note { font-family: "Noto Sans JP", sans-serif; font-size: 11px; color: var(--text-sub); margin-bottom: 12px; }
+  .chart-box { position: relative; height: 260px; }
+  .seg-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+  .seg-card { border: 1px solid var(--rule-light); padding: 20px; }
+  .seg-card h4 { font-family: "Noto Serif JP", serif; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .seg-card .n { font-family: "Noto Sans JP", sans-serif; font-size: 11px; color: var(--text-sub); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--rule-light); }
+  .seg-card .seg-section { margin-bottom: 14px; }
+  .seg-card .seg-section h5 { font-family: "Noto Sans JP", sans-serif; font-size: 11px; color: var(--text-mute); font-weight: 500; margin-bottom: 6px; letter-spacing: 0.05em; }
+  .seg-card .seg-section h5.warn { color: var(--warning); }
+  .seg-card .seg-section ul { list-style: none; font-size: 13px; }
+  .seg-card .seg-section ul li { padding: 4px 0; display: flex; justify-content: space-between; border-bottom: 1px dotted var(--rule-light); }
+  .seg-card .seg-section ul li:last-child { border-bottom: none; }
+  .seg-card .seg-section ul li b { font-family: "Noto Sans JP", sans-serif; font-weight: 500; color: var(--accent); }
+  .seg-card .seg-note { font-size: 12px; color: var(--text-mute); line-height: 1.8; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--rule-light); }
+  .seg-5col { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: 20px 0; }
+  .seg-mini { border: 1px solid var(--rule-light); padding: 12px; font-size: 12px; }
+  .seg-mini h5 { font-family: "Noto Serif JP", serif; font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .seg-mini .n { font-family: "Noto Sans JP", sans-serif; font-size: 10px; color: var(--text-sub); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--rule-light); }
+  .seg-mini .lbl { font-family: "Noto Sans JP", sans-serif; font-size: 10px; color: var(--accent); margin-top: 8px; margin-bottom: 2px; }
+  .seg-mini .lbl.warn { color: var(--warning); }
+  .seg-mini ul { list-style: none; font-size: 11.5px; line-height: 1.6; }
+  .seg-mini ul li b { font-family: "Noto Sans JP", sans-serif; color: var(--text-mute); margin-left: 4px; }
+  .proposal-list { margin: 20px 0; }
+  .proposal { border: 1px solid var(--rule-light); padding: 20px 24px; margin-bottom: 12px; }
+  .proposal .head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--rule-light); }
+  .proposal .head .no { font-family: "Noto Sans JP", sans-serif; font-size: 11px; color: var(--accent); font-weight: 500; }
+  .proposal .head .tag { font-family: "Noto Sans JP", sans-serif; font-size: 10px; background: var(--accent); color: white; padding: 2px 8px; }
+  .proposal h4 { font-family: "Noto Serif JP", serif; font-size: 16px; font-weight: 700; margin-bottom: 8px; line-height: 1.6; }
+  .proposal p { font-size: 13.5px; line-height: 1.9; color: var(--text); }
+  .proposal .target { margin-top: 10px; font-family: "Noto Sans JP", sans-serif; font-size: 11px; color: var(--text-mute); background: var(--bg-alt); padding: 6px 10px; }
+  .proposal .target strong { color: var(--text); margin-right: 6px; }
+  footer { background: var(--bg-alt); border-top: 2px solid var(--text); padding: 32px 0; margin-top: 60px; font-size: 12px; color: var(--text-mute); }
+  .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--rule); }
+  footer h5 { font-family: "Noto Sans JP", sans-serif; font-size: 11px; color: var(--text); font-weight: 700; margin-bottom: 8px; }
+  footer p { font-size: 12px; line-height: 1.85; }
+  .colophon { padding-top: 14px; font-family: "Noto Sans JP", sans-serif; font-size: 11px; color: var(--text-sub); display: flex; justify-content: space-between; }
+  .autonote { font-family: "Noto Sans JP", sans-serif; font-size: 11px; color: var(--text-sub); background: var(--bg-alt); border: 1px solid var(--rule-light); padding: 10px 14px; margin: 16px 0; line-height: 1.7; }
+  @media (max-width: 760px) {
+    .container { padding: 0 16px; }
+    .cover h1 { font-size: 22px; }
+    .cover .meta { grid-template-columns: 1fr 1fr; }
+    .summary-box .row { grid-template-columns: 1fr 1fr; }
+    .summary-box .cell:nth-child(2) { border-right: none; }
+    .chart-row, .seg-2col, .footer-grid { grid-template-columns: 1fr; }
+    .seg-5col { grid-template-columns: 1fr 1fr; }
+    .colophon { flex-direction: column; gap: 6px; }
+    table.data td.bar { display: none; }
+  }
+</style>
+</head>
+<body>
+<header class="page-header"><div class="container">
+  <div>一般社団法人沖縄やんばるDMO</div>
+  <div>やんばるハッピーアンケート月次レポート　Vol. 2（令和8年5月）</div>
+</div></header>
+<div class="container">
+  <section class="cover">
+    <div class="category">やんばるハッピーアンケート月次レポート</div>
+    <h1>令和8年5月度<br/>やんばるハッピーアンケート 集計報告</h1>
+    <div class="subtitle">YAMBARU HAPPY SURVEY ／ MONTHLY REPORT — May 2026</div>
+    <dl class="meta">
+      <div><dt>号数</dt><dd>Vol. 2</dd></div>
+      <div><dt>集計期間</dt><dd>令和8年5月1日〜31日</dd></div>
+      <div><dt>有効回答数</dt><dd>1,070件</dd></div>
+      <div><dt>発行日</dt><dd>令和8年6月3日</dd></div>
+    </dl>
+  </section>
+  <nav class="toc"><h2>目　次</h2><ol>
+    <li><a href="#c1">5月の概況と要旨</a></li>
+    <li><a href="#c2">回答者プロフィール</a></li>
+    <li><a href="#c3">5月を彩るトピック（観光・体験／食／課題）</a></li>
+    <li><a href="#c4">性別で見る感動と課題</a></li>
+    <li><a href="#c5">年代で見る感動と課題</a></li>
+    <li><a href="#c6">同行者で見る感動と課題</a></li>
+    <li><a href="#c7">アクション提案</a></li>
+  </ol></nav>
+  <main>
+  <section class="chapter" id="c1"><div class="chapter-head"><div class="num">第1章</div><h2>5月の概況と要旨</h2></div>
+    <p class="lead">本月、やんばるハッピーアンケートには県内外より<b>1,070件</b>の有効回答が寄せられた。回答者の<b>体験・サービス満足度86.3％</b>（「大変満足」「満足」の合計）、<b>再来訪意向94.9％</b>（「必ず来たい」「来たい」の合計）、<b>NPS＋51.3</b>（推奨者59.1％・批判者7.8％）を記録し、やんばる体験への評価は引き続き高い水準にある。自由記述では感動の中核として「やんばるの森・自然」(35.0%)・「海・ビーチ」(18.9%)・「のんびり・癒し・静けさ」(16.0%)が上位を占め、課題側では<b>「道路・渋滞」</b>を筆頭に受入環境への要望が寄せられた。</p>
+    
+    <div class="summary-box"><div class="row">
+      <div class="cell"><div class="label">有効回答数</div><div class="value">1,070<span class="unit">件</span></div><div class="sub">県外 64.4% ／ 県内 35.6%</div></div>
+      <div class="cell"><div class="label">体験・サービス満足度</div><div class="value">86.3<span class="unit">%</span></div><div class="sub">「大変満足」46.3% を含む</div></div>
+      <div class="cell"><div class="label">再来訪意向</div><div class="value">94.9<span class="unit">%</span></div><div class="sub">「必ず来たい」68.3% を含む</div></div>
+      <div class="cell"><div class="label">NPS（推奨度）</div><div class="value">+51.3</div><div class="sub">推奨者 59.1% ／ 批判者 7.8%</div></div>
+    </div></div>
+    <div class="keypoint"><h4>本月の要旨</h4><ol><li>有効回答は<b>1,070件</b>。県外 64.4%・県内 35.6% で構成され、満足度 86.3%・再来訪意向 94.9%・NPS＋51.3 と高評価が維持された。</li><li>感動の中核は「やんばるの森・自然」（自由記述の35.0%が言及）。これに「やんばるの森・自然」(35.0%)・「海・ビーチ」(18.9%)・「のんびり・癒し・静けさ」(16.0%)が続き、やんばる体験の価値構造を形成している。</li><li>食では「食事全般・美味しさ」（7.9%）が中心。「道の駅・地元食材」など地元食材・体験型の食への言及も見られる。</li><li>課題（改善要望ありは全体の29.9%）は「道路・渋滞」・「施設・観光地の少なさ」・「公共交通の少なさ」に集中。受入環境の整備が継続テーマ。</li><li>訪問回数では初回 17.7% に対し、4回目以上のリピーターが 54.8%（11回目以上 29.8%）。やんばるが「来るほど深まる土地」である構図が確認された。</li></ol></div>
+    <div class="autonote">本レポートの集計値は GitHub 公開データ（yambarudmo/yanbaru-oki-survey）を毎月1日に自動取得し、機械的に算出・生成したものです。本文・要旨・提案はデータ連動の自動生成テキストであり、事実（集計値）に基づきます。</div>
+  </section>
+  <section class="chapter" id="c2"><div class="chapter-head"><div class="num">第2章</div><h2>回答者プロフィール</h2></div>
+    <p class="lead">本月の回答者は、沖縄県内 381件（35.6%）、県外 689件（64.4%）で構成された。県外では<b>東京・神奈川・大阪・愛知</b>などが上位を占めた。性別構成は女性60.2%・男性38.4%、年代は<b>30〜50代の現役層が72.1%</b>を占める。同行者構成は<b>「パートナー(恋人・夫婦など)」が40.7%</b>で最大セグメントとなった。</p>
+    <h3 class="sub">2-1　居住地・年代</h3>
+    <div class="chart-row">
+      <div class="chart-block"><div class="ttl">居住地（上位10）</div><div class="note">n=1,070　単位：件</div><div class="chart-box"><canvas id="chartOrigin"></canvas></div></div>
+      <div class="chart-block"><div class="ttl">年代別構成</div><div class="note">n=1,070　単位：件</div><div class="chart-box"><canvas id="chartAge"></canvas></div></div>
+    </div>
+    <h3 class="sub">2-2　同行者・訪問回数</h3>
+    <div class="chart-row">
+      <div class="chart-block"><div class="ttl">同行者構成</div><div class="note">n=1,070　単位：件</div><div class="chart-box"><canvas id="chartCompanion"></canvas></div></div>
+      <div class="chart-block"><div class="ttl">訪問回数</div><div class="note">n=1,070　単位：件</div><div class="chart-box"><canvas id="chartVisitCount"></canvas></div></div>
+    </div>
+    <p style="font-size:13.5px;color:var(--text-mute);margin-top:16px;">訪問回数では、初回来訪が17.7%にとどまる一方、<b>4回目以上のリピーターが54.8%</b>（うち11回目以上が29.8%）を占めた。やんばるが「初訪で出会い、リピートで深まる」性質を持つ観光地であることが、本月の母数でも裏付けられた。</p>
+  </section>
+  <section class="chapter" id="c3"><div class="chapter-head"><div class="num">第3章</div><h2>5月を彩るトピック</h2></div>
+    <p class="lead">本月の自由記述（ポジティブ n=742／改善要望 n=362）から、感動を<b>「観光・体験」「食」</b>に、課題を<b>「改善要望」</b>に分けてキーワード抽出により整理した。観光・体験では「やんばるの森・自然」が374件と最多で、食・課題もそれぞれ下表のテーマに意見が集まった。</p>
+    <h3 class="sub">3-1　ポジティブな感動 ── 観光・体験</h3>
+    <table class="data"><thead><tr><th>No.</th><th>テーマ</th><th>件数</th><th>比率</th><th>分布</th></tr></thead><tbody><tr><td class="num">1</td><td class="theme">やんばるの森・自然</td><td class="cnt">374</td><td class="pct">35.0%</td><td class="bar"><span class="bar-inner" style="width: 100%;"></span></td></tr><tr><td class="num">2</td><td class="theme">海・ビーチ</td><td class="cnt">202</td><td class="pct">18.9%</td><td class="bar"><span class="bar-inner" style="width: 54%;"></span></td></tr><tr><td class="num">3</td><td class="theme">のんびり・癒し・静けさ</td><td class="cnt">171</td><td class="pct">16.0%</td><td class="bar"><span class="bar-inner" style="width: 46%;"></span></td></tr><tr><td class="num">4</td><td class="theme">美ら海水族館・海洋博公園</td><td class="cnt">80</td><td class="pct">7.5%</td><td class="bar"><span class="bar-inner" style="width: 21%;"></span></td></tr><tr><td class="num">5</td><td class="theme">ドライブ・絶景</td><td class="cnt">78</td><td class="pct">7.3%</td><td class="bar"><span class="bar-inner" style="width: 21%;"></span></td></tr><tr><td class="num">6</td><td class="theme">リゾート・宿泊体験</td><td class="cnt">77</td><td class="pct">7.2%</td><td class="bar"><span class="bar-inner" style="width: 21%;"></span></td></tr><tr><td class="num">7</td><td class="theme">ヤンバルクイナ・固有種</td><td class="cnt">65</td><td class="pct">6.1%</td><td class="bar"><span class="bar-inner" style="width: 17%;"></span></td></tr><tr><td class="num">8</td><td class="theme">テーマパーク（ジャングリア等）</td><td class="cnt">52</td><td class="pct">4.9%</td><td class="bar"><span class="bar-inner" style="width: 14%;"></span></td></tr></tbody></table><p>最も多く語られた「やんばるの森・自然」（35.0%）を中心に、「海・ビーチ」、「のんびり・癒し・静けさ」などがやんばる体験の感動を構成している。</p><div class="voices"><div class="voice">本物のヤンバルクイナを見た体験 雨のヤンバルの森の体験<span class="meta">女性／50代／パートナー(恋人・夫婦など)</span></div><div class="voice">ジャングリアが期待外れでした。 ホテルのプールやビーチが充実していてゆっくりできました。<span class="meta">女性／30代／未就学児を含む家族</span></div><div class="voice">ジャングリアが期待外れでした。 ホテルのプールやビーチが充実していてゆっくりできました。<span class="meta">女性／30代／未就学児を含む家族</span></div></div>
+    <h3 class="sub">3-2　ポジティブな感動 ── 食</h3>
+    <table class="data"><thead><tr><th>No.</th><th>テーマ</th><th>件数</th><th>比率</th><th>分布</th></tr></thead><tbody><tr><td class="num">1</td><td class="theme">食事全般・美味しさ</td><td class="cnt">85</td><td class="pct">7.9%</td><td class="bar"><span class="bar-inner" style="width: 100%;"></span></td></tr><tr><td class="num">2</td><td class="theme">道の駅・地元食材</td><td class="cnt">39</td><td class="pct">3.6%</td><td class="bar"><span class="bar-inner" style="width: 46%;"></span></td></tr><tr><td class="num">3</td><td class="theme">カフェ・コーヒー</td><td class="cnt">12</td><td class="pct">1.1%</td><td class="bar"><span class="bar-inner" style="width: 14%;"></span></td></tr><tr><td class="num">4</td><td class="theme">沖縄そば・郷土料理</td><td class="cnt">9</td><td class="pct">0.8%</td><td class="bar"><span class="bar-inner" style="width: 11%;"></span></td></tr><tr><td class="num">5</td><td class="theme">オリオンビール・工場見学</td><td class="cnt">8</td><td class="pct">0.7%</td><td class="bar"><span class="bar-inner" style="width: 9%;"></span></td></tr><tr><td class="num">6</td><td class="theme">ホテル・リゾート飲食</td><td class="cnt">1</td><td class="pct">0.1%</td><td class="bar"><span class="bar-inner" style="width: 1%;"></span></td></tr></tbody></table><p>食の感動は「食事全般・美味しさ」を筆頭に、地元食材・カフェ・郷土料理など複数の領域に分散して語られた。</p><div class="voices"><div class="voice">自然が豊か、食べものが美味しい 心が癒される<span class="meta">男性／50代／パートナー(恋人・夫婦など)</span></div><div class="voice">那覇に比べて混雑していない所 果物、お魚が美味しい。 ビーチが混雑していなくて特によい。<span class="meta">女性／50代／パートナー(恋人・夫婦など)</span></div></div>
+    <h3 class="sub">3-3　課題・改善要望</h3>
+    <p style="font-size:13.5px;color:var(--text-mute);">改善要望「あり」と回答した320名（全回答の29.9%）の自由記述から分類。</p>
+    <table class="data"><thead><tr><th>No.</th><th>テーマ</th><th>件数</th><th>比率</th><th>分布</th></tr></thead><tbody><tr class="warn"><td class="num">1</td><td class="theme">道路・渋滞</td><td class="cnt">43</td><td class="pct">13.4%</td><td class="bar"><span class="bar-inner" style="width: 100%;"></span></td></tr><tr class="warn"><td class="num">2</td><td class="theme">施設・観光地の少なさ</td><td class="cnt">43</td><td class="pct">13.4%</td><td class="bar"><span class="bar-inner" style="width: 100%;"></span></td></tr><tr class="warn"><td class="num">3</td><td class="theme">公共交通の少なさ</td><td class="cnt">40</td><td class="pct">12.5%</td><td class="bar"><span class="bar-inner" style="width: 93%;"></span></td></tr><tr class="warn"><td class="num">4</td><td class="theme">トイレ・休憩所</td><td class="cnt">33</td><td class="pct">10.3%</td><td class="bar"><span class="bar-inner" style="width: 77%;"></span></td></tr><tr class="warn"><td class="num">5</td><td class="theme">店・食の選択肢／営業時間</td><td class="cnt">32</td><td class="pct">10.0%</td><td class="bar"><span class="bar-inner" style="width: 74%;"></span></td></tr><tr class="warn"><td class="num">6</td><td class="theme">案内・標識の不明瞭さ</td><td class="cnt">23</td><td class="pct">7.2%</td><td class="bar"><span class="bar-inner" style="width: 53%;"></span></td></tr><tr class="warn"><td class="num">7</td><td class="theme">雨天対応・屋根動線</td><td class="cnt">11</td><td class="pct">3.4%</td><td class="bar"><span class="bar-inner" style="width: 26%;"></span></td></tr><tr class="warn"><td class="num">8</td><td class="theme">駐車場</td><td class="cnt">9</td><td class="pct">2.8%</td><td class="bar"><span class="bar-inner" style="width: 21%;"></span></td></tr></tbody></table><p>改善要望は「道路・渋滞」（43件）を最多に、移動・滞在の選択肢に関する声が中心を占めた。改善要望「あり」は全回答の29.9%。</p><div class="voices"><div class="voice warn">車の煽り運転、高速の事故渋滞<span class="meta">女性／50代／パートナー(恋人・夫婦など)</span></div><div class="voice warn">空港から遠い。北に行くほど宿泊と観光施設が少なくなる。<span class="meta">女性／40代／未就学児を含む家族</span></div><div class="voice warn">周遊バスを通念化してほしい<span class="meta">女性／30代／未就学児を含む家族</span></div><div class="voice warn">お手洗いの清潔さ<span class="meta">女性／30代／友人</span></div></div>
+  </section>
+  <section class="chapter" id="c4"><div class="chapter-head"><div class="num">第4章</div><h2>性別で見る感動と課題</h2></div>
+    <p class="lead">性別による感動・課題の構造を、自由記述のテーマ別件数で比較した。男女に共通する価値と、層ごとに異なる関心・困りごとが読み取れる。</p><div class="seg-2col"><div class="seg-card"><h4>女性回答者</h4><div class="n">n=644</div><div class="seg-section"><h5>ポジティブ感動 ── 観光・体験</h5><ul><li>やんばるの森・自然<b>236件</b></li><li>海・ビーチ<b>136件</b></li><li>のんびり・癒し・静けさ<b>121件</b></li><li>ドライブ・絶景<b>55件</b></li><li>リゾート・宿泊体験<b>46件</b></li></ul></div><div class="seg-section"><h5>ポジティブ感動 ── 食</h5><ul><li>食事全般・美味しさ<b>56件</b></li><li>道の駅・地元食材<b>26件</b></li><li>カフェ・コーヒー<b>9件</b></li><li>沖縄そば・郷土料理<b>6件</b></li><li>オリオンビール・工場見学<b>5件</b></li></ul></div><div class="seg-section"><h5 class="warn">課題・改善要望</h5><ul><li>トイレ・休憩所<b>27件</b></li><li>施設・観光地の少なさ<b>26件</b></li><li>公共交通の少なさ<b>24件</b></li><li>道路・渋滞<b>22件</b></li><li>店・食の選択肢／営業時間<b>20件</b></li></ul></div><p class="seg-note">感動の最上位は「やんばるの森・自然」、課題の最上位は「トイレ・休憩所」。この層の関心の重心を示す。</p></div><div class="seg-card"><h4>男性回答者</h4><div class="n">n=411</div><div class="seg-section"><h5>ポジティブ感動 ── 観光・体験</h5><ul><li>やんばるの森・自然<b>133件</b></li><li>海・ビーチ<b>63件</b></li><li>のんびり・癒し・静けさ<b>50件</b></li><li>美ら海水族館・海洋博公園<b>35件</b></li><li>リゾート・宿泊体験<b>31件</b></li></ul></div><div class="seg-section"><h5>ポジティブ感動 ── 食</h5><ul><li>食事全般・美味しさ<b>27件</b></li><li>道の駅・地元食材<b>13件</b></li><li>オリオンビール・工場見学<b>3件</b></li><li>カフェ・コーヒー<b>3件</b></li><li>沖縄そば・郷土料理<b>3件</b></li></ul></div><div class="seg-section"><h5 class="warn">課題・改善要望</h5><ul><li>道路・渋滞<b>20件</b></li><li>施設・観光地の少なさ<b>17件</b></li><li>公共交通の少なさ<b>15件</b></li><li>店・食の選択肢／営業時間<b>11件</b></li><li>案内・標識の不明瞭さ<b>6件</b></li></ul></div><p class="seg-note">感動の最上位は「やんばるの森・自然」、課題の最上位は「道路・渋滞」。この層の関心の重心を示す。</p></div></div>
+  </section>
+  <section class="chapter" id="c5"><div class="chapter-head"><div class="num">第5章</div><h2>年代で見る感動と課題</h2></div>
+    <p class="lead">年代別に感動と課題のテーマを比較した。共通の感動軸を持ちつつ、年代によって課題の重心（移動・施設・案内など）が移ろう様子が見える。</p><div class="seg-5col"><div class="seg-mini"><h5>20代以下</h5><div class="n">n=133</div><div class="lbl">体験</div><ul><li>やんばるの森・自然<b>39</b></li><li>のんびり・癒し・静けさ<b>19</b></li><li>海・ビーチ<b>17</b></li></ul><div class="lbl warn">課題</div><ul><li>道路・渋滞<b>3</b></li><li>公共交通の少なさ<b>2</b></li><li>店・食の選択肢／営業時間<b>2</b></li></ul></div><div class="seg-mini"><h5>30代</h5><div class="n">n=232</div><div class="lbl">体験</div><ul><li>やんばるの森・自然<b>66</b></li><li>海・ビーチ<b>41</b></li><li>のんびり・癒し・静けさ<b>35</b></li></ul><div class="lbl warn">課題</div><ul><li>道路・渋滞<b>9</b></li><li>施設・観光地の少なさ<b>8</b></li><li>公共交通の少なさ<b>6</b></li></ul></div><div class="seg-mini"><h5>40代</h5><div class="n">n=244</div><div class="lbl">体験</div><ul><li>やんばるの森・自然<b>89</b></li><li>海・ビーチ<b>44</b></li><li>のんびり・癒し・静けさ<b>36</b></li></ul><div class="lbl warn">課題</div><ul><li>施設・観光地の少なさ<b>16</b></li><li>道路・渋滞<b>15</b></li><li>公共交通の少なさ<b>11</b></li></ul></div><div class="seg-mini"><h5>50代</h5><div class="n">n=295</div><div class="lbl">体験</div><ul><li>やんばるの森・自然<b>105</b></li><li>海・ビーチ<b>59</b></li><li>のんびり・癒し・静けさ<b>47</b></li></ul><div class="lbl warn">課題</div><ul><li>公共交通の少なさ<b>13</b></li><li>店・食の選択肢／営業時間<b>11</b></li><li>トイレ・休憩所<b>11</b></li></ul></div><div class="seg-mini"><h5>60代以上</h5><div class="n">n=166</div><div class="lbl">体験</div><ul><li>やんばるの森・自然<b>75</b></li><li>海・ビーチ<b>41</b></li><li>のんびり・癒し・静けさ<b>34</b></li></ul><div class="lbl warn">課題</div><ul><li>公共交通の少なさ<b>8</b></li><li>道路・渋滞<b>7</b></li><li>案内・標識の不明瞭さ<b>7</b></li></ul></div></div>
+  </section>
+  <section class="chapter" id="c6"><div class="chapter-head"><div class="num">第6章</div><h2>同行者で見る感動と課題</h2></div>
+    <p class="lead">同行者構成別に感動と課題を整理した。誰と訪れるかによって、求める体験と直面する課題が異なることが分かる。</p><div class="seg-2col"><div class="seg-card"><h4>パートナー</h4><div class="n">n=436</div><div class="seg-section"><h5>体験</h5><ul><li>やんばるの森・自然<b>163件</b></li><li>海・ビーチ<b>97件</b></li><li>のんびり・癒し・静けさ<b>80件</b></li></ul></div><div class="seg-section"><h5 class="warn">課題</h5><ul><li>公共交通の少なさ<b>24件</b></li><li>施設・観光地の少なさ<b>18件</b></li><li>道路・渋滞<b>16件</b></li></ul></div><p class="seg-note">この層の感動の中心は「やんばるの森・自然」。</p></div><div class="seg-card"><h4>家族</h4><div class="n">n=381</div><div class="seg-section"><h5>体験</h5><ul><li>やんばるの森・自然<b>125件</b></li><li>海・ビーチ<b>66件</b></li><li>のんびり・癒し・静けさ<b>52件</b></li></ul></div><div class="seg-section"><h5 class="warn">課題</h5><ul><li>道路・渋滞<b>18件</b></li><li>施設・観光地の少なさ<b>13件</b></li><li>案内・標識の不明瞭さ<b>11件</b></li></ul></div><p class="seg-note">この層の感動の中心は「やんばるの森・自然」。</p></div></div><div class="seg-2col" style="margin-top:16px;"><div class="seg-card"><h4>ひとり旅</h4><div class="n">n=80</div><div class="seg-section"><h5>体験</h5><ul><li>やんばるの森・自然<b>27件</b></li><li>海・ビーチ<b>12件</b></li><li>のんびり・癒し・静けさ<b>11件</b></li></ul></div><div class="seg-section"><h5 class="warn">課題</h5><ul><li>公共交通の少なさ<b>6件</b></li><li>店・食の選択肢／営業時間<b>4件</b></li><li>案内・標識の不明瞭さ<b>3件</b></li></ul></div><p class="seg-note">この層の感動の中心は「やんばるの森・自然」。</p></div><div class="seg-card"><h4>友人</h4><div class="n">n=94</div><div class="seg-section"><h5>体験</h5><ul><li>やんばるの森・自然<b>36件</b></li><li>海・ビーチ<b>16件</b></li><li>のんびり・癒し・静けさ<b>16件</b></li></ul></div><div class="seg-section"><h5 class="warn">課題</h5><ul><li>トイレ・休憩所<b>8件</b></li><li>施設・観光地の少なさ<b>7件</b></li><li>店・食の選択肢／営業時間<b>6件</b></li></ul></div><p class="seg-note">この層の感動の中心は「やんばるの森・自然」。</p></div></div>
+  </section>
+  <section class="chapter" id="c7"><div class="chapter-head"><div class="num">第7章</div><h2>アクション提案</h2></div>
+    <p class="lead">本月の集計・分析（自由記述のテーマ別件数）に直接の根拠を持つアクションを提案する。各提案には主要ターゲットを併記した。</p>
+    <div class="proposal-list"><div class="proposal"><div class="head"><div class="no">提案1</div><div class="tag">情報発信</div></div><h4>感動の最上位「やんばるの森・自然」を本月の主題に編集する</h4><p>本月、自由記述で最も多く語られた感動は「やんばるの森・自然」（35.0%・374件）であった。これに「海・ビーチ」「のんびり・癒し・静けさ」が続く。この感動軸を核に、特集ページ・SNS・宿泊施設の発信を統一テーマで束ねる。</p><div class="target"><strong>主要ターゲット</strong>女性60.2%・現役層中心／「パートナー(恋人・夫婦など)」層</div></div><div class="proposal"><div class="head"><div class="no">提案2</div><div class="tag">受入環境</div></div><h4>最多の課題「道路・渋滞」への対応を優先検討する</h4><p>改善要望で最も多かったのは「道路・渋滞」（43件）。改善要望「あり」は全回答の29.9%にのぼる。自由記述の具体的な声を起点に、関係機関と連携した受入環境の改善を検討する。</p><div class="target"><strong>主要ターゲット</strong>レンタカー利用者／滞在型観光客</div></div><div class="proposal"><div class="head"><div class="no">提案3</div><div class="tag">交通・受入</div></div><h4>「道路・渋滞」の緩和に向けた段階的施策を検討する</h4><p>「道路・渋滞」は43件と移動面の主要課題。運行情報のデジタル化・周遊ルートの工夫など、実装可能な打ち手から着手する。</p><div class="target"><strong>主要ターゲット</strong>パートナー層／ひとり旅層／公共交通利用客</div></div><div class="proposal"><div class="head"><div class="no">提案4</div><div class="tag">商品開発</div></div><h4>食の感動「食事全般・美味しさ」を体験商品として磨く</h4><p>食では「食事全般・美味しさ」（85件）が中心。地元食材・体験型の食を周遊コースに組み込み、滞在価値を高める。</p><div class="target"><strong>主要ターゲット</strong>家族・友人層／滞在型観光客</div></div><div class="proposal"><div class="head"><div class="no">提案5</div><div class="tag">リピーター</div></div><h4>リピーターの厚みを活かした継続来訪施策を設計する</h4><p>4回目以上のリピーターが54.8%（11回目以上29.8%）と厚い。再来訪意向も94.9%と高く、季節ごとの新体験・限定情報の発信で来訪頻度の維持・向上を図る。</p><div class="target"><strong>主要ターゲット</strong>既存リピーター／パートナー・ひとり旅層</div></div></div>
+  </section>
+  </main>
+</div>
+<footer><div class="container">
+  <div class="footer-grid">
+    <div><h5>本レポートについて</h5><p>本レポートは、やんばるエリア（沖縄本島北部）の宿泊施設・観光拠点・飲食店に設置されたQRコードから回答された国内観光ウェブアンケートを集計し、自由記述を含めてテーマ別に編集したものです。毎月1日に前月分を自動生成・公開しています。</p></div>
+    <div><h5>調査概要</h5><p>集計期間：令和8年5月1日〜31日<br/>有効回答数：n＝1,070件<br/>対象：国内居住者<br/>内訳：沖縄県内 35.6% ／ 県外 64.4%<br/>集計方法：単純集計・自由記述キーワード抽出</p></div>
+    <div><h5>ご利用にあたって</h5><p>宿泊・飲食・観光・交通事業者／自治体・観光協会・DMO／商品開発・プロモーション・企画立案にあたる方々の根拠データとして自由にご活用いただけます。</p></div>
+  </div>
+  <div class="colophon"><div>発行：一般社団法人沖縄やんばるDMO</div><div>YAMBARU HAPPY SURVEY ／ Vol. 2 — 令和8年6月3日発行</div></div>
+</div></footer>
+<script>
+Chart.defaults.font.family = '"Noto Sans JP", sans-serif';
+Chart.defaults.font.size = 11; Chart.defaults.color = '#555'; Chart.defaults.borderColor = '#e3e3e3';
+const ACCENT='#2f5a3f', ACCENT_LIGHT='#6e8d77', ACCENT_PALE='#a8baa9';
+new Chart(document.getElementById('chartOrigin'),{type:'bar',data:{labels:["沖縄", "東京", "神奈川", "大阪", "愛知", "埼玉", "千葉", "兵庫", "福岡", "静岡"],datasets:[{data:[381, 143, 72, 51, 48, 44, 40, 37, 26, 22],backgroundColor:ACCENT,borderWidth:0,barThickness:14}]},options:{maintainAspectRatio:false,indexAxis:'y',scales:{x:{grid:{color:'#eee'}},y:{grid:{display:false}}},plugins:{legend:{display:false}}}});
+new Chart(document.getElementById('chartAge'),{type:'bar',data:{labels:["20代以下", "30代", "40代", "50代", "60代以上"],datasets:[{label:'女性',data:[80, 141, 145, 175, 103],backgroundColor:ACCENT,borderWidth:0},{label:'男性',data:[50, 88, 96, 115, 62],backgroundColor:ACCENT_LIGHT,borderWidth:0},{label:'その他・無回答',data:[3, 3, 3, 5, 1],backgroundColor:ACCENT_PALE,borderWidth:0}]},options:{maintainAspectRatio:false,scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,grid:{color:'#eee'}}},plugins:{legend:{position:'bottom',labels:{boxWidth:12,padding:12}}}}});
+new Chart(document.getElementById('chartCompanion'),{type:'bar',data:{labels:["パートナー(恋人・夫婦など)", "未就学児を含む家族", "小学生を含む家族(未就学児は含まない)", "友人", "自分ひとり", "その他家族", "中学生以上を含む家族(小学生以下は含まない)", "親", "職場の同僚"],datasets:[{data:[436, 159, 97, 94, 80, 63, 62, 47, 22],backgroundColor:ACCENT,borderWidth:0,barThickness:12}]},options:{maintainAspectRatio:false,indexAxis:'y',scales:{x:{grid:{color:'#eee'}},y:{grid:{display:false}}},plugins:{legend:{display:false}}}});
+new Chart(document.getElementById('chartVisitCount'),{type:'bar',data:{labels:["初めて", "2-3回目", "4-5回目", "6-10回目", "11回目以上"],datasets:[{data:[189, 295, 145, 122, 319],backgroundColor:ACCENT,borderWidth:0,barThickness:34}]},options:{maintainAspectRatio:false,scales:{x:{grid:{display:false}},y:{grid:{color:'#eee'}}},plugins:{legend:{display:false}}}});
+</script>
+</body>
+</html>
