@@ -588,23 +588,33 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--month", default=None, help="対象月 YYYY-MM（既定=前月）")
     ap.add_argument("--csv", default=None, help="ローカルCSV（テスト用）")
+    ap.add_argument("--summary", default=None,
+                    help="既存の summary.json を直接使う（Tableau等の別ソースで生成済みの場合）。"
+                         "指定時は build_report を呼ばずデータソース非依存でHTML生成する。")
     args = ap.parse_args()
     month = args.month or prev_month()
     print(f"[generate] 対象月 = {month}")
 
-    # 1) 集計（build_report.py）。N=0 なら build_report が非ゼロ終了 → 例外伝播で停止
-    with tempfile.TemporaryDirectory() as tmp:
-        cmd = [sys.executable, os.path.join(SCRIPTS, "build_report.py"), "--month", month, "--out", tmp]
-        if args.csv:
-            cmd += ["--csv", args.csv]
-        res = subprocess.run(cmd)
-        if res.returncode != 0:
-            # 対象月のデータ未更新（N=0）等。無人運用では「正常終了して何もしない」
-            # → 後続日のリトライ実行で拾う（空レポートは発行しない）。
-            print("[generate] SKIP: 対象月のデータが未取得/0件のため発行を見送ります（翌日以降に再試行）。", file=sys.stderr)
-            sys.exit(0)
-        with open(os.path.join(tmp, "summary.json"), encoding="utf-8") as f:
+    # 1) 集計データ summary.json を用意（データソース非依存）
+    if args.summary:
+        # 別ソース（Tableau等）で生成済みの summary.json をそのまま使う
+        with open(args.summary, encoding="utf-8") as f:
             s = json.load(f)
+        print(f"[generate] 既存 summary を使用: {args.summary}")
+    else:
+        # GitHub all.csv から build_report.py で集計。N=0 なら非ゼロ終了
+        with tempfile.TemporaryDirectory() as tmp:
+            cmd = [sys.executable, os.path.join(SCRIPTS, "build_report.py"), "--month", month, "--out", tmp]
+            if args.csv:
+                cmd += ["--csv", args.csv]
+            res = subprocess.run(cmd)
+            if res.returncode != 0:
+                # 対象月のデータ未更新（N=0）等。無人運用では「正常終了して何もしない」
+                # → 後続日のリトライ実行で拾う（空レポートは発行しない）。
+                print("[generate] SKIP: 対象月のデータが未取得/0件のため発行を見送ります（翌日以降に再試行）。", file=sys.stderr)
+                sys.exit(0)
+            with open(os.path.join(tmp, "summary.json"), encoding="utf-8") as f:
+                s = json.load(f)
 
     N = s["meta"]["N"]; vol = vol_of(month)
 
